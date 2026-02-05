@@ -4,14 +4,45 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    private static final Scanner sc = new Scanner(System.in);
+    private static ArrayList<String> nombres = new ArrayList<>();
+    private static ArrayList<String> apellidos = new ArrayList<>();
+    private static ArrayList<Integer> edades = new ArrayList<>();
+    private static ArrayList<String> correos = new ArrayList<>();
+
     public static void main(String[] args) {
+        menu();
+    }
 
-        Scanner sc = new Scanner(System.in);
+    public static void menu() {
+        boolean exit;
+        do {
+            exit = false;
+            System.out.println("====== GESTIÓN DE ALUMNOS =====" +
+                    "\n1. Insertar Alumno" +
+                    "\n2. Listar alumnos" +
+                    "\n3. Salir" +
+                    "\nIngrese una opción: ");
+            int opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    insertarAlumno();
+                    break;
+                case 2:
+//                    listarAlumnos();
+                    break;
+                case 3:
+                    System.out.println("Saliendo .....");
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Opción no valida.");
+                    break;
+            }
+        } while (!exit);
+    }
 
-        ArrayList<String> nombres = new ArrayList<>();
-        ArrayList<String> apellidos = new ArrayList<>();
-        ArrayList<Integer> edades = new ArrayList<>();
-        ArrayList<String> correos = new ArrayList<>();
+    public static void insertarAlumno() {
 
         int opcion = -1;
         while (opcion != 0) {
@@ -31,28 +62,24 @@ public class Main {
                 // ===== NOMBRE =====
                 System.out.print("Nombre: ");
                 String nombre = sc.next();
+                validarTexto(nombre);
 
-                if (nombre.length() < 2) {
-                    System.out.println("Nombre inválido");
-                    continue;
-                }
                 // ===== APELLIDO =====
                 System.out.print("Apellido: ");
                 String apellido = sc.next();
 
                 if (apellido.length() < 2) {
-                    System.out.println("Apellido inválido");
+                    System.out.println("Apellido inválido, solo se permite texto con mínimo dos letras");
                     continue;
                 }
                 // ===== EDAD =====
-                System.out.print("Edad: ");
+                System.out.print("Edad (Entre 18 y 100): ");
                 if (!sc.hasNextInt()) {
                     System.out.println("Edad debe ser número");
                     sc.next();
                     continue;
                 }
                 int edad = sc.nextInt();
-
                 if (edad < 18 || edad > 100) {
                     System.out.println("Edad fuera de rango (18-100)");
                     continue;
@@ -90,5 +117,12 @@ public class Main {
         }
         sc.close();
     }
-}
 
+
+    // VALIDACIONES
+    public static void validarTexto(String texto) {
+        if (texto.length() < 2) {
+            System.out.println("Nombre inválido, solo se permite texto con mínimo dos letras");
+        }
+    }
+}
