@@ -4,21 +4,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    private static final Scanner sc = new Scanner(System.in);
-    private static ArrayList<String> nombres = new ArrayList<>();
-    private static ArrayList<String> apellidos = new ArrayList<>();
-    private static ArrayList<Integer> edades = new ArrayList<>();
-    private static ArrayList<String> correos = new ArrayList<>();
 
     public static void main(String[] args) {
         menu();
     }
 
+    // Menu
     public static void menu() {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Alumno> alumnos = new ArrayList<>();
         boolean exit;
         do {
             exit = false;
-            System.out.println("====== GESTIÓN DE ALUMNOS =====" +
+            System.out.println("\n====== GESTIÓN DE ALUMNOS =====" +
                     "\n1. Insertar Alumno" +
                     "\n2. Listar alumnos" +
                     "\n3. Salir" +
@@ -26,10 +24,10 @@ public class Main {
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    insertarAlumno();
+                    insertarAlumno(sc, alumnos);
                     break;
                 case 2:
-//                    listarAlumnos();
+                    listarAlumnos(alumnos);
                     break;
                 case 3:
                     System.out.println("Saliendo .....");
@@ -42,87 +40,85 @@ public class Main {
         } while (!exit);
     }
 
-    public static void insertarAlumno() {
+    static class Alumno {
+        String nombre, apellido, correo;
+        int edad;
 
-        int opcion = -1;
-        while (opcion != 0) {
-            System.out.println("\n1 Insertar alumno");
-            System.out.println("2 Listar alumnos");
-            System.out.println("0 Salir");
-
-            if (sc.hasNextInt()) {
-                opcion = sc.nextInt();
-            } else {
-                System.out.println("Debes introducir un número");
-                sc.next(); // limpiar basura
-                opcion = -1;
-                continue;
-            }
-            if (opcion == 1) {
-                // ===== NOMBRE =====
-                System.out.print("Nombre: ");
-                String nombre = sc.next();
-                validarTexto(nombre);
-
-                // ===== APELLIDO =====
-                System.out.print("Apellido: ");
-                String apellido = sc.next();
-
-                if (apellido.length() < 2) {
-                    System.out.println("Apellido inválido, solo se permite texto con mínimo dos letras");
-                    continue;
-                }
-                // ===== EDAD =====
-                System.out.print("Edad (Entre 18 y 100): ");
-                if (!sc.hasNextInt()) {
-                    System.out.println("Edad debe ser número");
-                    sc.next();
-                    continue;
-                }
-                int edad = sc.nextInt();
-                if (edad < 18 || edad > 100) {
-                    System.out.println("Edad fuera de rango (18-100)");
-                    continue;
-                }
-                // ===== CORREO =====
-                System.out.print("Correo: ");
-                String correo = sc.next();
-                // validación simple (mala a propósito)
-                if (!correo.contains("@") || !correo.contains(".")) {
-                    System.out.println("Correo inválido");
-                    continue;
-                }
-                // guardar
-                nombres.add(nombre);
-                apellidos.add(apellido);
-                edades.add(edad);
-                correos.add(correo);
-                System.out.println("Alumno guardado correctamente");
-            } else if (opcion == 2) {
-                if (nombres.size() == 0) {
-                    System.out.println("No hay alumnos");
-                } else {
-                    for (int i = 0; i < nombres.size(); i++) {
-                        System.out.println(
-                                nombres.get(i) + " " +
-                                        apellidos.get(i) + " | " +
-                                        edades.get(i) + " | " +
-                                        correos.get(i)
-                        );
-                    }
-                }
-            } else if (opcion != 0) {
-                System.out.println("Opción incorrecta");
-            }
+        Alumno(String nombre, String apellido, int edad, String correo) {
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.edad = edad;
+            this.correo = correo;
         }
-        sc.close();
+
+        @Override
+        public String toString() {
+            return "Nombre: " + nombre + ", Apellido: " + apellido + ", Edad: " + edad + ", Correo: " + correo;
+        }
     }
 
+    public static void insertarAlumno(Scanner sc, ArrayList<Alumno> alumnos) {
+        String nombre = leerNombre(sc);
+        String apellido = leerApellido(sc);
+        int edad = leerEntero(sc, "Edad: ", 18, 100);
+        String correo = leerCorreo(sc);
+
+        alumnos.add(new Alumno(nombre, apellido, edad, correo));
+        System.out.println("Alumno guardado correctamente");
+    }
+
+    // Lecturas
+    private static String leerNombre(Scanner sc) {
+        return leerCampoTexto(sc, "Nombre; ", 2);
+    }
+
+    private static String leerApellido(Scanner sc) {
+        return leerCampoTexto(sc, "Apellido: ", 2);
+    }
+
+    private static String leerCorreo(Scanner sc) {
+        while (true) {
+            System.out.println("Correo: ");
+            String correo = sc.next();
+            if (validarCorreo(correo)) return correo;
+            System.out.println("Correo invalido");
+        }
+    }
+
+    private static String leerCampoTexto(Scanner sc, String mensaje, int minLen) {
+        while (true) {
+            System.out.println(mensaje);
+            String valor = sc.next();
+            if (valor.length() > minLen) return valor;
+            System.out.println("Deben tener al menos " + minLen + " caracteres");
+        }
+    }
 
     // VALIDACIONES
-    public static void validarTexto(String texto) {
-        if (texto.length() < 2) {
-            System.out.println("Nombre inválido, solo se permite texto con mínimo dos letras");
+    private static int leerEntero(Scanner sc, String mensaje, int min, int max) {
+        while (true) {
+            System.out.print(mensaje);
+            if (!sc.hasNextInt()) {
+                System.out.println("Debe ser un número.");
+                sc.next();
+                continue;
+            }
+            int valor = sc.nextInt();
+            if (valor >= min && valor <= max) return valor;
+            System.out.println("Rango permitido: " + min + "-" + max);
         }
+    }
+
+    // Listado
+    private static void listarAlumnos(ArrayList<Alumno> alumnos) {
+        if (alumnos.isEmpty()) {
+            System.out.println("No hay alumnos.");
+            return;
+        }
+        alumnos.forEach(System.out::println);
+    }
+
+    private static boolean validarCorreo(String correo) {
+        return correo.contains("@") && correo.contains(".");
     }
 }
