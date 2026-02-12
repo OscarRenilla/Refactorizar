@@ -18,18 +18,11 @@ public class Main {
 // Ejercicio 1:
 
     public static double calculadoraDescuento(double precio, boolean esClienteVip) {
-        double descuento;
-        if (esClienteVip) {
-            descuento = precio * 0.20;
-            double precioFinal = precio - descuento;
-            System.out.println("Descuento aplicado: " + descuento);
-            return precioFinal;
-        } else {
-            descuento = precio * 0.10;
-            double precioFinal = precio - descuento;
-            System.out.println("Descuento aplicado: " + descuento);
-            return precioFinal;
-        }
+        double porcentaje = esClienteVip ? 0.20 : 0.10;
+        double descuento = precio * porcentaje;
+
+        System.out.println("Descuento aplicado: " + descuento);
+        return precio - descuento;
     }
 
 
