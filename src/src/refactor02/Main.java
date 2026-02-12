@@ -96,80 +96,80 @@ public class Main {
         }
         return 0;
     }
-
-// -----------------------------------------------------------------------------------------
-//  Ejercicio 4:
-
-    public void Producto() {
-
-        private String nombre;
-        private double precio;
-        private int stock;
-
-        public void setNombre (String nombre){
-            if (nombre == null) {
-                throw new IllegalArgumentException("Nombre no puede ser nulo");
-            }
-            if (nombre.trim().isEmpty()) {
-                throw new IllegalArgumentException("Nombre no puede estar vacío");
-            }
-            if (nombre.length() > 100) {
-                throw new IllegalArgumentException("Nombre demasiado largo");
-            }
-            this.nombre = nombre;
-        }
-
-        public void setPrecio (double precio){
-            if (precio < 0) {
-                throw new IllegalArgumentException("Precio no puede ser negativo");
-            }
-            if (precio > 1000000) {
-                throw new IllegalArgumentException("Precio excede el máximo permitido");
-            }
-            this.precio = precio;
-        }
-
-        public void setStock ( int stock){
-            if (stock < 0) {
-                throw new IllegalArgumentException("Stock no puede ser negativo");
-            }
-            if (stock > 10000) {
-                throw new IllegalArgumentException("Stock excede el máximo permitido");
-            }
-            this.stock = stock;
-        }
-    }
-// ------------------------------------------------------------------------------------------
-//  Ejercicio 5:
-
-    public void Configuracion() {
-        private Properties propiedades;
-
-        public Properties cargarConfiguracionDesarrollo () {
-            propiedades = new Properties();
-            propiedades.setProperty("ambiente", "desarrollo");
-            propiedades.setProperty("url", "localhost:8080");
-            propiedades.setProperty("debug", "true");
-            propiedades.setProperty("timeout", "5000");
-            return propiedades;
-        }
-
-        public Properties cargarConfiguracionProduccion () {
-            propiedades = new Properties();
-            propiedades.setProperty("ambiente", "produccion");
-            propiedades.setProperty("url", "api.midominio.com");
-            propiedades.setProperty("debug", "false");
-            propiedades.setProperty("timeout", "30000");
-            return propiedades;
-        }
-
-        public Properties cargarConfiguracionTesting () {
-            propiedades = new Properties();
-            propiedades.setProperty("ambiente", "testing");
-            propiedades.setProperty("url", "test.midominio.com");
-            propiedades.setProperty("debug", "true");
-            propiedades.setProperty("timeout", "10000");
-            return propiedades;
-        }
-    }
+//
+//// -----------------------------------------------------------------------------------------
+////  Ejercicio 4:
+//
+//    public void Producto() {
+//
+//        private String nombre;
+//        private double precio;
+//        private int stock;
+//
+//        public void setNombre (String nombre){
+//            if (nombre == null) {
+//                throw new IllegalArgumentException("Nombre no puede ser nulo");
+//            }
+//            if (nombre.trim().isEmpty()) {
+//                throw new IllegalArgumentException("Nombre no puede estar vacío");
+//            }
+//            if (nombre.length() > 100) {
+//                throw new IllegalArgumentException("Nombre demasiado largo");
+//            }
+//            this.nombre = nombre;
+//        }
+//
+//        public void setPrecio (double precio){
+//            if (precio < 0) {
+//                throw new IllegalArgumentException("Precio no puede ser negativo");
+//            }
+//            if (precio > 1000000) {
+//                throw new IllegalArgumentException("Precio excede el máximo permitido");
+//            }
+//            this.precio = precio;
+//        }
+//
+//        public void setStock ( int stock){
+//            if (stock < 0) {
+//                throw new IllegalArgumentException("Stock no puede ser negativo");
+//            }
+//            if (stock > 10000) {
+//                throw new IllegalArgumentException("Stock excede el máximo permitido");
+//            }
+//            this.stock = stock;
+//        }
+//    }
+//// ------------------------------------------------------------------------------------------
+////  Ejercicio 5:
+//
+//    public void Configuracion() {
+//        private Properties propiedades;
+//
+//        public Properties cargarConfiguracionDesarrollo () {
+//            propiedades = new Properties();
+//            propiedades.setProperty("ambiente", "desarrollo");
+//            propiedades.setProperty("url", "localhost:8080");
+//            propiedades.setProperty("debug", "true");
+//            propiedades.setProperty("timeout", "5000");
+//            return propiedades;
+//        }
+//
+//        public Properties cargarConfiguracionProduccion () {
+//            propiedades = new Properties();
+//            propiedades.setProperty("ambiente", "produccion");
+//            propiedades.setProperty("url", "api.midominio.com");
+//            propiedades.setProperty("debug", "false");
+//            propiedades.setProperty("timeout", "30000");
+//            return propiedades;
+//        }
+//
+//        public Properties cargarConfiguracionTesting () {
+//            propiedades = new Properties();
+//            propiedades.setProperty("ambiente", "testing");
+//            propiedades.setProperty("url", "test.midominio.com");
+//            propiedades.setProperty("debug", "true");
+//            propiedades.setProperty("timeout", "10000");
+//            return propiedades;
+//        }
+//    }
 }
