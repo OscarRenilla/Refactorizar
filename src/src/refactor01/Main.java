@@ -40,7 +40,7 @@ public class Main {
         } while (!exit);
     }
 
-    static class Alumno {
+    public static class Alumno {
         String nombre, apellido, correo;
         int edad;
 
@@ -115,7 +115,7 @@ public class Main {
             System.out.println("No hay alumnos.");
             return;
         }
-        alumnos.forEach(System.out::println);
+        System.out.println(alumnos);
     }
 
     private static boolean validarCorreo(String correo) {
