@@ -1,10 +1,8 @@
 package refactor02;
 
-import java.util.ArrayList;
 import java.util.Properties;
-import java.util.Scanner;
 
-public class Main {
+public class Main_02 {
 
     public static void main(String[] args) {
 
